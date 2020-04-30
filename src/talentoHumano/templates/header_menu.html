@@ -1,7 +1,10 @@
-<a class="nav-item nav-link active" href="{% url 'convocatorias.convocatorias' %}">Home</a>
-<a class="nav-item nav-link active" href="#">Nothing here</a>
 {% if not user.is_authenticated %}
-<a class="nav-item nav-link active" href="{% url 'login' %}">Sign In</a>
+<a class="nav-item nav-link active" href="{% url 'login' %}">Ingresar</a>
 {% else %}
-<a class="nav-item nav-link active" href="{% url 'logout' %}">Log out</a>
+    {% if user.first_name %}
+        <a class="nav-item nav-link active">{{ user.first_name }}</a>
+    {% else %}
+        <a class="nav-item nav-link active">{{ user.email }}</a>
+    {% endif %}
+<a class="nav-item nav-link active" href="{% url 'logout' %}">Salir</a>
 {% endif %}

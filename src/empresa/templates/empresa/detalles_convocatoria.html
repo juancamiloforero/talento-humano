@@ -1,0 +1,14 @@
+{% extends 'master.html' %}
+
+{% block content %}
+<h1>Convocatoria {{object.pk}}</h1>
+
+<a>{{ object.description }}</a>
+<a>{{ object.position }}</a>
+<a>{{ object.closing_time }}</a>
+<a>{{ object.state }}</a>
+
+<a>{{ candidates }}</a>
+<a>{{ anonymous }}</a>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'master.html' %}
+
+{% block content %}
+<div class="container">
+    {% for convocatoria in convocatorias %}
+    <div class="row">
+        <div class="col">
+            <h1>{{ convocatoria.position }}</h1>
+        </div>
+        <div class="col-md-auto">
+
+        </div>
+        <div class="col col-lg-2">
+            <a href="{% url 'empresa.detalles_convocatoria' convocatoria.id %}">
+                Detalles de convocatoria
+            </a>
+        </div>
+    </div>
+    <hr>
+    {% endfor %}
+</div>
+
+<a href="{% url 'empresa.crear_convocatoria' %}">
+    Registrar convocatoria
+</a>
+{% endblock %}

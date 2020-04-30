@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'convocatorias',
+    'empresa',
 ]
 
 MIDDLEWARE = [
@@ -103,5 +104,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = 'convocatorias.convocatorias'
+LOGIN_REDIRECT_URL = 'afterLogin'
 LOGIN_URL = 'login'
+
+AUTH_USER_MODEL = 'convocatorias.User'

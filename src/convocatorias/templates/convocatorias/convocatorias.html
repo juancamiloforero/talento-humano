@@ -1,5 +1,36 @@
 {% extends 'master.html' %}
 
 {% block content %}
-<h1>HOLI Desde convocatorias</h1>
+<h1>{{ page_title }}</h1>
+<hr>
+<div class="container">
+    <div class="row">
+        <div class="col">Cargo</div>
+        <div class="col">Empresa</div>
+        <div class="col">Descripción</div>
+        <div class="col">Fecha y hora de cierre</div>
+        <div class="col">Acciones</div>
+    </div>
+    <hr>
+    {% for convocatoria in convocatorias %}
+    <div class="row">
+        <div class="col">
+            <a>{{ convocatoria.position }}</a>
+        </div>
+        <div class="col">
+            <a>{{ convocatoria.company.username }}</a>
+        </div>
+        <div class="col">
+            <a>{{ convocatoria.description }}</a>
+        </div>
+        <div class="col">
+            <a>{{ convocatoria.closing_time }}</a>
+        </div>
+        <div class="col">
+            <a href="{% url 'convocatorias.aplicar' convocatoria.id %}">Aplicar</a>
+        </div>
+    </div>
+    <hr>
+    {% endfor %}
+</div>
 {% endblock %}
