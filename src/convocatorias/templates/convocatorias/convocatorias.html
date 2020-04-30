@@ -1,10 +1,12 @@
 {% extends 'master.html' %}
 
 {% block content %}
-{% if estado %}
-<div class="alert alert-success" role="alert">
-    {{ estado }}
-</div>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
 {% endif %}
 <h1>{{ page_title }}</h1>
 <hr>
@@ -23,7 +25,7 @@
             <a>{{ convocatoria.position }}</a>
         </div>
         <div class="col">
-            <a>{{ convocatoria.company.username }}</a>
+            <a>{{ convocatoria.company.first_name }}</a>
         </div>
         <div class="col">
             <a>{{ convocatoria.description }}</a>

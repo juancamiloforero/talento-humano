@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import FormView, CreateView
+from django.contrib import messages
 from .models import Convocatoria, Anonymous
 from .forms import AplicarAnonimoForm
 
@@ -28,16 +29,12 @@ class AplicarConvocatoriaView(View):
         if request.user.is_authenticated and request.user.is_candidate:
             # Buscar la convocatoria seleccionada y asignar al usuario a la convocatoria
             convocatoria = Convocatoria.objects.get(pk=kwargs['pk'])
-            context = {
-                'page_title': "Convocatorias más actuales!",
-                'convocatorias': Convocatoria.objects.all().order_by('closing_time')
-            }
             if request.user in convocatoria.candidates_users.all():
-                context.update({'estado': "Ya has aplicado a la convocatoria anteriormente!"})    
+                messages.error(request, 'Ya has aplicado a la convocatoria anteriormente!')
             else:
                 convocatoria.candidates_users.add(request.user)
-                context.update({'estado': "Aplicación satisfactoria!"})
-            return render(request, 'convocatorias/convocatorias.html', context=context)
+                messages.success(request, 'Aplicación satisfactoria!')
+            return redirect('/')
         else:
             return redirect('anonimo/' + str(kwargs['pk']))
 
