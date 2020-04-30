@@ -2,13 +2,74 @@
 
 {% block content %}
 <h1>Convocatoria {{object.pk}}</h1>
-
-<a>{{ object.description }}</a>
-<a>{{ object.position }}</a>
-<a>{{ object.closing_time }}</a>
-<a>{{ object.state }}</a>
-
+<hr>
+<div class="container">
+    <div class="row">
+        Cargo: {{ object.position }}
+    </div>
+    <div class="row">
+        Descripción: {{ object.description }}
+    </div>
+    <div class="row">
+        Estado: {{ object.state }}
+    </div>
+    <div class="row">
+        Fecha y hora de cierre: {{ object.closing_time }}
+    </div>
+</div>
+<hr>
+<div class="card">
+    <div class="card-body">
+        <h3 class="card-title">Usuarios postulados</h3>
+        {% if candidates.0 %}
+        <div class="container">
+            <div class="row">
+                <div class="col">Email</div>
+                <div class="col">Nombres</div>
+                <div class="col">Apellidos</div>
+            </div>
+            <hr>
+            {% for cand in candidates %}
+            <div class="row">
+                <div class="col">{{ cand.email }}</div>
+                <div class="col">{{ cand.first_name }}</div>
+                <div class="col">{{ cand.last_name }}</div>
+            </div>
+            <hr>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="alert alert-primary" role="alert">
+            No hay usuarios postulados
+        </div>
+        {% endif %}
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <h3 class="card-title">Usuarios anónimos postulados</h3>
+        {% if anonymous.0 %}
+        <div class="container">
+            <div class="row">
+                <div class="col">Nombres</div>
+                <div class="col">Curriculo</div>
+            </div>
+            <hr>
+            {% for cand in anonymous%}
+            <div class="row">
+                <div class="col">{{ cand.name }}</div>
+                <div class="col">{{ cand.curriculum }}</div>
+            </div>
+            <hr>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="alert alert-primary" role="alert">
+            No hay usuarios anónimos postulados
+        </div>
+        {% endif %}
+    </div>
+</div>
 <a>{{ candidates }}</a>
-<a>{{ anonymous }}</a>
 
 {% endblock %}

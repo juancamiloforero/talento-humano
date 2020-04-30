@@ -1,6 +1,11 @@
 {% extends 'master.html' %}
 
 {% block content %}
+{% if estado %}
+<div class="alert alert-success" role="alert">
+    {{ estado }}
+</div>
+{% endif %}
 <h1>{{ page_title }}</h1>
 <hr>
 <div class="container">

@@ -3,6 +3,8 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser
 from .managers import CustomUserManager
+from .validators import FileValidator
+import datetime
 
 class User(AbstractUser):
     email = models.EmailField(_('email'), unique=True)
@@ -30,10 +32,14 @@ class User(AbstractUser):
     def is_staff(self):
         return self.is_admin
 
+def user_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    now = datetime.datetime.now()
+    return 'curriculums/{0}-{1}-{2}'.format(instance.name, now, filename)
 
 class Anonymous(models.Model):
     name = models.CharField(_('nombre completo'), max_length=120)
-    curriculum = models.FileField(upload_to='documents/')
+    curriculum = models.FileField(_('curriculo'), upload_to=user_directory_path, validators=[FileValidator(max_size=10*1024*1024, allowed_extensions='pdf')])
 
 class Convocatoria(models.Model):
     OPENED = 'ABIERTA'

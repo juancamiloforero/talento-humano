@@ -108,3 +108,6 @@ LOGIN_REDIRECT_URL = 'afterLogin'
 LOGIN_URL = 'login'
 
 AUTH_USER_MODEL = 'convocatorias.User'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
