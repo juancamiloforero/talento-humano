@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import FormView, CreateView
 from django.contrib import messages
-from .models import Convocatoria, Anonymous
+from .models import Convocatoria, Anonymous, User
 from .forms import AplicarAnonimoForm
 from django.utils import timezone
 
@@ -58,3 +58,12 @@ class AplicarConvocatoriaAnonimoView(CreateView):
         convocatoria = Convocatoria.objects.get(pk=self.kwargs['pk'])
         convocatoria.candidates_anonymous.add(anonymous)
         return super().form_valid(form)
+
+class ListaMisConvocatoriasView(View):
+    def get(self, request):
+        mis_conv = User.objects.get(id=request.user.id).candidates.all()
+
+        context = {
+            'convocatorias': mis_conv,
+        }
+        return render(request, 'convocatorias/mis_convocatorias.html', context=context)

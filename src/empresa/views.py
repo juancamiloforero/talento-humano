@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from convocatorias.models import Convocatoria
 from convocatorias.forms import ConvocatoriaModelForm
 from django.views import View
@@ -6,15 +6,21 @@ from django.views.generic import FormView, DetailView
 
 class MisConvocatoriasView(View):
     def get(self, request):
+        mis_conv = Convocatoria.objects.filter(company=request.user)
+
+        # Extraer cantidad de aspirantes
+        cantidad_aspirantes = []
+        for conv in mis_conv:
+            cantidad_aspirantes.append(conv.candidates_users.all().count() + conv.candidates_anonymous.all().count())
+        
         context = {
-            'convocatorias': Convocatoria.objects.all()
+            'convocatorias': zip(mis_conv, cantidad_aspirantes),
         }
         return render(request, 'empresa/mis_convocatorias.html', context=context)
 
 class EmpresaHomeView(View):
     def get(self, request):
-        context = {}
-        return render(request, 'empresa/empresa.html', context=context)
+        return redirect('empresa.mis_convocatorias')
 
 class CrearConvocatoriaView(FormView):
     form_class = ConvocatoriaModelForm
