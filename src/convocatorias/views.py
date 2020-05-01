@@ -38,10 +38,11 @@ class AplicarConvocatoriaView(View):
             # Buscar la convocatoria seleccionada y asignar al usuario a la convocatoria
             convocatoria = Convocatoria.objects.get(pk=kwargs['pk'])
             if request.user in convocatoria.candidates_users.all():
-                messages.error(request, 'Ya has aplicado a la convocatoria anteriormente!')
+                #messages.error(request, 'Ya has aplicado a la convocatoria anteriormente!')
+                pass
             else:
                 convocatoria.candidates_users.add(request.user)
-                messages.success(request, 'Aplicación satisfactoria!')
+                #messages.success(request, 'Aplicación satisfactoria!')
             return redirect('/')
         else:
             return redirect('anonimo/' + str(kwargs['pk']))
@@ -58,12 +59,3 @@ class AplicarConvocatoriaAnonimoView(CreateView):
         convocatoria = Convocatoria.objects.get(pk=self.kwargs['pk'])
         convocatoria.candidates_anonymous.add(anonymous)
         return super().form_valid(form)
-
-class ListaMisConvocatoriasView(View):
-    def get(self, request):
-        mis_conv = User.objects.get(id=request.user.id).candidates.all()
-
-        context = {
-            'convocatorias': mis_conv,
-        }
-        return render(request, 'convocatorias/mis_convocatorias.html', context=context)

@@ -57,7 +57,7 @@ class Convocatoria(models.Model):
     description = models.TextField(_('descripción'), max_length=300)
     closing_time = models.DateTimeField(_('fecha y hora de cierre'))
     state = models.CharField(_('estado'),max_length=9, choices=ESTADOS_CONVOCATORIA, default=OPENED)
-    company = models.ForeignKey(User, on_delete=models.CASCADE, related_name='companies', verbose_name=_('empresa'))
+    company = models.ForeignKey(User, on_delete=models.CASCADE, related_name='convocatorias', verbose_name=_('empresa'))
     candidates_users = models.ManyToManyField(User, related_name='candidates', verbose_name=_('candidatos inscritos'))
     candidates_anonymous = models.ManyToManyField(Anonymous, verbose_name=_('candidatos anonimos'))
     created_at = models.DateTimeField(_('fecha y hora de registro'), auto_now_add=True)

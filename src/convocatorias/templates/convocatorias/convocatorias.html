@@ -33,7 +33,7 @@
         </div>
         <div class="col">
             {% if convocatoria.state == "CERRADA" or convocatoria.state == "TERMINADA" %}
-            <a style="color: red">Terminada!</a>
+            <a style="color: red; font-weight: bold;">Terminada!</a>
             {% else %}
             <a>{{ convocatoria.closing_time }}</a>
             {% endif %}
