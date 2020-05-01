@@ -10,12 +10,12 @@
 
 import mimetypes
 from os.path import splitext
-
+from django.utils.deconstruct import deconstructible
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from django.template.defaultfilters import filesizeformat
 
-
+@deconstructible
 class FileValidator(object):
     """
     Validator for files, checking the size, extension and mimetype.

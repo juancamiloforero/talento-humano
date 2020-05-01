@@ -4,6 +4,7 @@ from django.views.generic import FormView, CreateView
 from django.contrib import messages
 from .models import Convocatoria, Anonymous
 from .forms import AplicarAnonimoForm
+from django.utils import timezone
 
 def after_login(request):
     if request.user.is_authenticated:
@@ -16,12 +17,19 @@ def after_login(request):
 
 class AllConvocatoriasView(View):
     def get(self, request, **kwargs):
+        convocatorias = Convocatoria.objects.all().order_by('closing_time')
+        # Por mejorar
+        for conv in convocatorias:
+            if conv.closing_time < timezone.now():
+                conv.state = "CERRADA"
+                conv.save()
+        
         context = {
             'page_title': "Convocatorias más actuales!",
-            'convocatorias': Convocatoria.objects.all().order_by('closing_time')
+            'convocatorias': convocatorias.order_by('state', 'closing_time'),
+            'timenow': timezone.now()
         }
-        print(request)
-        # context.update(kwargs['context'])
+        
         return render(request, 'convocatorias/convocatorias.html', context=context)
 
 class AplicarConvocatoriaView(View):

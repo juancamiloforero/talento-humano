@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MinLengthValidator
 from .managers import CustomUserManager
 from .validators import FileValidator
 import datetime
@@ -38,7 +39,7 @@ def user_directory_path(instance, filename):
     return 'curriculums/{0}-{1}-{2}'.format(instance.name, now, filename)
 
 class Anonymous(models.Model):
-    name = models.CharField(_('nombre completo'), max_length=120)
+    name = models.CharField(_('nombre completo'), max_length=120, validators=[MinLengthValidator(5)])
     curriculum = models.FileField(_('curriculo'), upload_to=user_directory_path, validators=[FileValidator(max_size=10*1024*1024, allowed_extensions='pdf')])
 
 class Convocatoria(models.Model):

@@ -1,4 +1,5 @@
 {% extends 'master.html' %}
+{% load tz %}
 
 {% block content %}
 {% if messages %}
@@ -31,7 +32,11 @@
             <a>{{ convocatoria.description }}</a>
         </div>
         <div class="col">
+            {% if convocatoria.state == "CERRADA" or convocatoria.state == "TERMINADA" %}
+            <a style="color: red">Terminada!</a>
+            {% else %}
             <a>{{ convocatoria.closing_time }}</a>
+            {% endif %}
         </div>
         <div class="col">
             <a href="{% url 'convocatorias.aplicar' convocatoria.id %}">Aplicar</a>
