@@ -29,9 +29,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'graphene_django',
     'convocatorias',
     'empresa',
     'aspirante',
+    'apiEmpresa'
 ]
 
 MIDDLEWARE = [
@@ -42,6 +44,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
 ]
 
 ROOT_URLCONF = 'talentoHumano.urls'
@@ -112,3 +115,19 @@ AUTH_USER_MODEL = 'convocatorias.User'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+GRAPHENE = {
+    'SCHEMA': 'apiEmpresa.schema.ROOT_SCHEMA',
+    'MIDDLEWARE': {
+        'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    }
+}
+
+# GRAPHQL_JWT = {
+#     "JWT_VERIFY_EXPIRATION": True,
+# }
+
+AUTHENTICATION_BACKENDS = [
+    'graphql_jwt.backends.JSONWebTokenBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]

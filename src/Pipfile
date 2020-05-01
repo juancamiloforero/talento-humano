@@ -9,6 +9,9 @@ pylint-django = "*"
 
 [packages]
 django = "*"
+graphene-django = "*"
+django-filter = "*"
+django-graphql-jwt = "*"
 
 [requires]
 python_version = "3.8"

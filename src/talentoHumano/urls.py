@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from convocatorias.views import after_login
+from graphene_django.views import GraphQLView
 
 urlpatterns = [
     path('', include('convocatorias.urls'), name='convocatorias'),
@@ -32,4 +33,7 @@ urlpatterns = [
     path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='auth/password_reset_done.html'), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='auth/password_reset_complete.html'), name='password_reset_complete'),
+
+    # Ruta API
+    path('api/', include('apiEmpresa.urls'), name='apiEmpresa'),
 ]
